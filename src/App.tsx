@@ -15,6 +15,7 @@ import { questions } from './data/questions';
 import { triggerCelebration } from './utils/confetti';
 import { sendQuizAnswers, initializeEmailJS } from './utils/emailjs';
 import { useQuizPersistence } from './hooks/useQuizPersistence';
+import { useQuizNavigation } from './hooks/useQuizNavigation';
 import type { Question } from './types/Question';
 
 type Step = 'intro' | 'question' | 'score' | 'letter' | 'valentine';
@@ -151,6 +152,7 @@ function quizReducer(state: QuizState, action: QuizAction): QuizState {
 export default function App() {
    const [state, dispatch] = useReducer(quizReducer, initialState);
    useQuizPersistence(state, dispatch);
+   useQuizNavigation(state, dispatch);
 
    useEffect(() => {
      initializeEmailJS();
