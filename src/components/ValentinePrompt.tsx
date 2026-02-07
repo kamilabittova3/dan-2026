@@ -6,25 +6,70 @@ interface ValentinePromptProps {
 }
 
 export function ValentinePrompt({ onYes }: ValentinePromptProps) {
-  const [noButtonPosition, setNoButtonPosition] = useState({ x: 0, y: 0 });
-  const [isPositioned, setIsPositioned] = useState(false);
+  const [noButtonPosition, setNoButtonPosition] = useState({ x: 20, y: 70 });
   const [isChasing, setIsChasing] = useState(false);
   const [buttonScale, setButtonScale] = useState(1);
   const [policeFlicker, setPoliceFlicker] = useState(false);
+  const [noButtonOpacity, setNoButtonOpacity] = useState(1);
+  const [isYesClicked, setIsYesClicked] = useState(false);
   const noButtonRef = useRef<HTMLButtonElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const buttonContainerRef = useRef<HTMLDivElement>(null);
   const scaleIntervalRef = useRef<number | null>(null);
   const flickerIntervalRef = useRef<number | null>(null);
 
-  useEffect(() => {
-    if (noButtonRef.current && !isPositioned) {
-      const rect = noButtonRef.current.getBoundingClientRect();
-      setNoButtonPosition({ x: rect.left, y: rect.top });
-      setIsPositioned(true);
-    }
-  }, [isPositioned]);
-
   const handleYesClick = () => {
+    setIsYesClicked(true);
+    
+    // Stop chase mode effects
+    stopSizeAnimation();
+    stopPoliceFlicker();
+    setIsChasing(false);
+    setButtonScale(1);
+    
+    // Calculate nearest edge
+    if (noButtonRef.current && buttonContainerRef.current) {
+      const buttonRect = noButtonRef.current.getBoundingClientRect();
+      const containerRect = buttonContainerRef.current.getBoundingClientRect();
+      
+      const buttonCenterX = buttonRect.left + buttonRect.width / 2;
+      const buttonCenterY = buttonRect.top + buttonRect.height / 2;
+      
+      // Calculate distances to each edge
+      const distToLeft = buttonCenterX - containerRect.left;
+      const distToRight = containerRect.right - buttonCenterX;
+      const distToTop = buttonCenterY - containerRect.top;
+      const distToBottom = containerRect.bottom - buttonCenterY;
+      
+      const minDist = Math.min(distToLeft, distToRight, distToTop, distToBottom);
+      
+      let targetX = noButtonPosition.x;
+      let targetY = noButtonPosition.y;
+      
+      if (minDist === distToLeft) {
+        targetX = -100;
+      } else if (minDist === distToRight) {
+        targetX = containerRect.width + 100;
+      } else if (minDist === distToTop) {
+        targetY = -100;
+      } else {
+        targetY = containerRect.height + 100;
+      }
+      
+      setNoButtonPosition({ x: targetX, y: targetY });
+    }
+    
+    // Fade out over 3 seconds
+    const fadeInterval = setInterval(() => {
+      setNoButtonOpacity((prev) => {
+        const newOpacity = prev - 0.02;
+        if (newOpacity <= 0) {
+          clearInterval(fadeInterval);
+          return 0;
+        }
+        return newOpacity;
+      });
+    }, 60);
+    
     const duration = 3000;
     const animationEnd = Date.now() + duration;
     const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 9999 };
@@ -68,17 +113,17 @@ export function ValentinePrompt({ onYes }: ValentinePromptProps) {
   };
 
   const moveNoButton = (pointerX: number, pointerY: number) => {
-    if (!noButtonRef.current || !containerRef.current) return;
+    if (!noButtonRef.current || !buttonContainerRef.current) return;
 
     const buttonRect = noButtonRef.current.getBoundingClientRect();
-    const containerRect = containerRef.current.getBoundingClientRect();
+    const containerRect = buttonContainerRef.current.getBoundingClientRect();
     
     const buttonCenterX = buttonRect.left + buttonRect.width / 2;
     const buttonCenterY = buttonRect.top + buttonRect.height / 2;
 
     const distance = calculateDistance(pointerX, pointerY, buttonCenterX, buttonCenterY);
 
-    const DODGE_THRESHOLD_PX = 100;
+    const DODGE_THRESHOLD_PX = 180;
     if (distance < DODGE_THRESHOLD_PX) {
       // Start chase mode
       if (!isChasing) {
@@ -89,7 +134,7 @@ export function ValentinePrompt({ onYes }: ValentinePromptProps) {
 
       const angle = Math.atan2(buttonCenterY - pointerY, buttonCenterX - pointerX);
       
-      const moveDistance = 150 + Math.random() * 100;
+      const moveDistance = 400 + Math.random() * 300;
       let newX = buttonCenterX + Math.cos(angle) * moveDistance;
       let newY = buttonCenterY + Math.sin(angle) * moveDistance;
 
@@ -101,7 +146,7 @@ export function ValentinePrompt({ onYes }: ValentinePromptProps) {
       newY = Math.max(padding, Math.min(newY - containerRect.top, maxY));
 
       setNoButtonPosition({ x: newX, y: newY });
-    } else if (distance > DODGE_THRESHOLD_PX * 2) {
+    } else if (distance > DODGE_THRESHOLD_PX * 2.5) {
       // Stop chase mode when far away
       if (isChasing) {
         setIsChasing(false);
@@ -148,9 +193,24 @@ export function ValentinePrompt({ onYes }: ValentinePromptProps) {
   };
 
   useEffect(() => {
+    const cleanupSizeAnimation = () => {
+      if (scaleIntervalRef.current) {
+        clearInterval(scaleIntervalRef.current);
+        scaleIntervalRef.current = null;
+      }
+    };
+
+    const cleanupPoliceFlicker = () => {
+      if (flickerIntervalRef.current) {
+        clearInterval(flickerIntervalRef.current);
+        flickerIntervalRef.current = null;
+        setPoliceFlicker(false);
+      }
+    };
+
     return () => {
-      stopSizeAnimation();
-      stopPoliceFlicker();
+      cleanupSizeAnimation();
+      cleanupPoliceFlicker();
     };
   }, []);
 
@@ -169,7 +229,6 @@ export function ValentinePrompt({ onYes }: ValentinePromptProps) {
 
   return (
     <div
-      ref={containerRef}
       className="min-h-screen flex items-center justify-center bg-gradient-to-br from-rose-100 via-pink-50 to-rose-200 px-4 sm:px-6 lg:px-8 py-8 sm:py-12 relative overflow-hidden"
     >
       {/* Animated background hearts */}
@@ -201,7 +260,7 @@ export function ValentinePrompt({ onYes }: ValentinePromptProps) {
               </div>
             </div>
 
-            <div className="relative h-32 w-full">
+            <div ref={buttonContainerRef} className="relative h-32 w-full">
               <div className="absolute inset-0 flex items-center justify-center">
                 <button
                   type="button"
@@ -219,17 +278,27 @@ export function ValentinePrompt({ onYes }: ValentinePromptProps) {
                 type="button"
                 onMouseMove={handleMouseMove}
                 onTouchStart={handleTouchStart}
-                style={
-                  isPositioned
-                    ? {
-                        position: 'absolute',
-                        left: `${noButtonPosition.x}px`,
-                        top: `${noButtonPosition.y}px`,
-                        transition: 'all 0.3s ease-out',
-                      }
-                    : {}
-                }
-                className="px-8 py-3 bg-white/50 backdrop-blur-md hover:bg-white/60 text-rose-700 text-lg font-semibold rounded-full shadow-lg border border-white/60"
+                onTouchMove={(e: React.TouchEvent) => {
+                  if (e.touches.length > 0) {
+                    const touch = e.touches[0];
+                    if (touch) {
+                      moveNoButton(touch.clientX, touch.clientY);
+                    }
+                  }
+                }}
+                style={{
+                  position: 'absolute',
+                  left: `${noButtonPosition.x}px`,
+                  top: `${noButtonPosition.y}px`,
+                  transition: isYesClicked ? 'all 3s ease-out' : 'all 0.1s ease-out',
+                  transform: `scale(${buttonScale})`,
+                  opacity: noButtonOpacity,
+                  backgroundColor: policeFlicker ? '#ef4444' : '#3b82f6',
+                  boxShadow: policeFlicker 
+                    ? '0 0 20px rgba(239, 68, 68, 0.8), 0 0 40px rgba(239, 68, 68, 0.6)' 
+                    : '0 0 20px rgba(59, 130, 246, 0.8), 0 0 40px rgba(59, 130, 246, 0.6)',
+                }}
+                className="px-4 py-2 text-white text-sm font-normal rounded border-2 border-gray-400 hover:border-gray-500 cursor-pointer"
               >
                 No
               </button>
