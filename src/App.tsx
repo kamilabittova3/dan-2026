@@ -157,7 +157,6 @@ export default function App() {
         <ProgressBar current={state.questionIndex + 1} total={questions.length} />
         
          <QuestionCard
-           designVariant={currentQuestion.designVariant}
            questionText={currentQuestion.question}
            videoSrc={currentQuestion.videoSrc}
          >
