@@ -1,6 +1,26 @@
 # Valentine's Day Quiz 2026 ❤️
 
-A romantic, interactive Valentine's Day quiz built with React, TypeScript, and Tailwind CSS. The quiz generates a personalized love letter based on your answers and includes a fun "runaway button" surprise at the end.
+A white-label Valentine's Day quiz that generates a personalized love letter from the recipient's answers. Fork it, customize it, send it to your person.
+
+## Quick Start
+
+```bash
+# 1. Clone & install
+git clone https://github.com/millon15/valentine-2026.git
+cd valentine-2026 && bun install
+
+# 2. Personalize — edit these two files:
+#    config/config.ts   → names, screen text, button labels
+#    config/content.ts  → quiz questions, answers, letter segments
+
+# 3. Run locally
+bun run dev
+
+# 4. Deploy — push to GitHub, enable Pages (Settings → Pages → Source: GitHub Actions)
+#    Live at: https://<your-username>.github.io/valentine-2026/
+```
+
+---
 
 ## Table of Contents
 
