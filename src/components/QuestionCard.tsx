@@ -25,11 +25,11 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
 
       <div className="max-w-3xl w-full relative z-10">
         {/* Liquid glass card */}
-        <div className="bg-white/40 backdrop-blur-xl rounded-3xl shadow-2xl shadow-rose-200/50 p-6 sm:p-10 lg:p-12 border border-white/60 relative overflow-hidden">
+        <div className="bg-white/40 backdrop-blur-xl rounded-3xl shadow-2xl shadow-rose-200/50 p-6 sm:p-10 lg:p-12 border border-white/60 relative overflow-hidden min-h-[500px] sm:min-h-[550px] lg:min-h-[600px] flex flex-col justify-center">
           {/* Glass reflection effect */}
           <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-transparent pointer-events-none" />
           
-          <div className="space-y-6 sm:space-y-8 lg:space-y-10 relative">
+          <div className="space-y-6 sm:space-y-8 lg:space-y-10 relative w-full">
             {videoSrc && (
               <div className="flex justify-center motion-reduce:hidden">
                 <video
