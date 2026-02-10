@@ -1,12 +1,13 @@
 @import "tailwindcss";
 
 /* Prevent white flash on overscroll — match the rose/pink gradient theme */
-html {
-  background-color: #fecdd3; /* rose-200: matches bottom of default gradient */
+html, body {
+  background-color: #fedce0; /* soft pink — 70% blend between rose-200 and white for smooth overscroll */
+  background-image: linear-gradient(to bottom right, #ffe4e6, #fce7f3, #fecdd3); /* rose-100 → pink-50 → rose-200 */
+  min-height: 100%;
 }
 
 body {
-  background-color: #fecdd3;
   overscroll-behavior-y: none; /* prevent bounce/overscroll on mobile */
 }
 
