@@ -186,6 +186,7 @@ export default function App() {
          <QuestionCard
            questionText={currentQuestion.question}
            videoSrc={currentQuestion.videoSrc}
+           designVariant={currentQuestion.designVariant}
          >
           {currentQuestion.type === 'multipleChoice' && (
             <MultipleChoiceQuestion

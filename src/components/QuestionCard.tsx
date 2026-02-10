@@ -1,20 +1,24 @@
 import React from 'react';
 import { useVideoAutoplay } from '../hooks/useVideoAutoplay';
+import { questionVariants } from '../styles/questionVariants';
 
 interface QuestionCardProps {
   questionText: string;
   videoSrc?: string;
+  designVariant?: string;
   children: React.ReactNode;
 }
 
 export const QuestionCard: React.FC<QuestionCardProps> = ({
   questionText,
   videoSrc,
+  designVariant,
   children,
 }) => {
   const { registerVideo } = useVideoAutoplay();
+  const variant = designVariant ? questionVariants[designVariant] : null;
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-rose-100 via-pink-50 to-rose-200 px-4 sm:px-6 lg:px-8 py-8 sm:py-12 relative overflow-hidden">
+    <div className={`min-h-screen flex items-center justify-center ${variant?.background ?? 'bg-gradient-to-br from-rose-100 via-pink-50 to-rose-200'} px-4 sm:px-6 lg:px-8 py-8 sm:py-12 relative overflow-hidden`}>
       {/* Floating background decorations */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-[10%] left-[5%] text-rose-300 opacity-20 text-6xl animate-[float-1_8s_ease-in-out_infinite]">💕</div>
@@ -25,7 +29,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
 
       <div className="max-w-3xl w-full relative z-10">
         {/* Liquid glass card */}
-        <div className="bg-white/40 backdrop-blur-xl rounded-3xl shadow-2xl shadow-rose-200/50 p-6 sm:p-10 lg:p-12 border border-white/60 relative overflow-hidden min-h-[500px] sm:min-h-[550px] lg:min-h-[600px] flex flex-col justify-center">
+        <div className={`${variant?.cardBg ?? 'bg-white/40 backdrop-blur-xl'} rounded-3xl shadow-2xl ${variant?.shadowColor ?? 'shadow-rose-200/50'} p-6 sm:p-10 lg:p-12 border border-white/60 relative overflow-hidden min-h-[500px] sm:min-h-[550px] lg:min-h-[600px] flex flex-col justify-center`}>
           {/* Glass reflection effect */}
           <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-transparent pointer-events-none" />
           
@@ -46,7 +50,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
                 </video>
               </div>
             )}
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-rose-900 text-center leading-tight">
+            <h2 className={`text-2xl sm:text-3xl lg:text-4xl font-bold ${variant?.textColor ?? 'text-rose-900'} text-center leading-tight`}>
               {questionText}
             </h2>
 
