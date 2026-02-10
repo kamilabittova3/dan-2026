@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Use class-based dark mode instead of prefers-color-scheme (Tailwind v4) */
+@variant dark (&:where(.dark, .dark *));
+
 /* Prevent white flash on overscroll — match the rose/pink gradient theme */
 html, body {
   background-color: #fedce0; /* soft pink — 70% blend between rose-200 and white for smooth overscroll */
