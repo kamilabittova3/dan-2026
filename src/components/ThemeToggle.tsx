@@ -9,7 +9,7 @@ export const ThemeToggle: React.FC = () => {
       type="button"
       onClick={toggle}
       aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-      className="w-7 h-7 flex items-center justify-center rounded-full opacity-50 hover:opacity-100 transition-opacity duration-300 focus:outline-none"
+      className="w-8 h-8 flex items-center justify-center rounded-full border border-rose-300/40 dark:border-white/15 bg-white/50 dark:bg-white/10 shadow-sm hover:shadow-md hover:bg-white/80 dark:hover:bg-white/20 opacity-70 hover:opacity-100 transition-all duration-300 focus:outline-none active:scale-90"
     >
       <div
         className="transition-transform duration-300"
