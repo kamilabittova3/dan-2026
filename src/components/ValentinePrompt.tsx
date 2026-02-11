@@ -9,20 +9,20 @@ interface ValentinePromptProps {
 
 /** Physics constants for the bouncing No button */
 const PHYSICS = {
-  /** Friction applied each frame (0-1, lower = more friction) */
+  /** Friction applied each frame (0-1, closer to 1 = more slippery) */
   FRICTION: 0.985,
   /** Velocity below which the button stops */
-  MIN_VELOCITY: 0.3,
+  MIN_VELOCITY: 0.15,
   /** Initial speed when fleeing from cursor */
   LAUNCH_SPEED: 18,
   /** Bounce energy retention (0-1, 1 = perfectly elastic) */
-  RESTITUTION: 0.75,
+  RESTITUTION: 0.7,
   /** Padding from container edges in pixels */
-  EDGE_PADDING: 4,
+  EDGE_PADDING: 0,
   /** Extra gap between No button and Yes button on collision */
-  YES_BUTTON_GAP: 4,
-  /** Distance threshold (px) to trigger dodge */
-  DODGE_THRESHOLD: 180,
+  YES_BUTTON_GAP: 2,
+  /** Distance from button edge (px) to trigger dodge (negative = cursor must be inside) */
+  DODGE_THRESHOLD: -5,
   /** Distance threshold multiplier to stop chase mode */
   CHASE_STOP_MULTIPLIER: 2.5,
 };
@@ -30,17 +30,12 @@ const PHYSICS = {
 export function ValentinePrompt({ onYes, hideNoButton }: ValentinePromptProps) {
   const [noButtonPosition, setNoButtonPosition] = useState({ x: 20, y: 70 });
   const [isChasing, setIsChasing] = useState(false);
-  const [buttonScale, setButtonScale] = useState(1);
-  const [policeFlicker, setPoliceFlicker] = useState(false);
   const [noButtonOpacity, setNoButtonOpacity] = useState(1);
-  const [isYesClicked, setIsYesClicked] = useState(false);
   const [noClickCount, setNoClickCount] = useState(0);
   const [noClickMessage, setNoClickMessage] = useState<string | null>(null);
   const noButtonRef = useRef<HTMLButtonElement>(null);
   const yesButtonRef = useRef<HTMLButtonElement>(null);
   const buttonContainerRef = useRef<HTMLDivElement>(null);
-  const scaleIntervalRef = useRef<number | null>(null);
-  const flickerIntervalRef = useRef<number | null>(null);
   const countRef = useRef(0);
   const messageTimerRef = useRef<number | null>(null);
 
@@ -50,14 +45,7 @@ export function ValentinePrompt({ onYes, hideNoButton }: ValentinePromptProps) {
   const animFrameRef = useRef<number | null>(null);
 
   const handleYesClick = () => {
-    setIsYesClicked(true);
-
-    // Stop chase mode effects
-    stopSizeAnimation();
-    stopPoliceFlicker();
     setIsChasing(false);
-    setButtonScale(0);
-    setNoButtonOpacity(0);
 
     // Stop physics animation
     velocityRef.current = { vx: 0, vy: 0 };
@@ -65,6 +53,21 @@ export function ValentinePrompt({ onYes, hideNoButton }: ValentinePromptProps) {
       cancelAnimationFrame(animFrameRef.current);
       animFrameRef.current = null;
     }
+
+    // Animate No button: spin + shrink + fade out via Web Animations API
+    // (WAAPI overrides CSS animation's transform while it keeps providing background-color)
+    const noBtn = noButtonRef.current;
+    if (noBtn && noBtn.animate) {
+      noBtn.animate(
+        [
+          { transform: 'scale(1) rotate(0deg)', opacity: 1 },
+          { transform: 'scale(0) rotate(720deg)', opacity: 0 },
+        ],
+        { duration: 800, easing: 'ease-in', fill: 'forwards' },
+      );
+    }
+    // Fallback: hide after animation duration
+    setTimeout(() => setNoButtonOpacity(0), 850);
 
     const duration = 3000;
     const animationEnd = Date.now() + duration;
@@ -102,10 +105,6 @@ export function ValentinePrompt({ onYes, hideNoButton }: ValentinePromptProps) {
     setTimeout(() => {
       onYes(noClickCount);
     }, 500);
-  };
-
-  const calculateDistance = (x1: number, y1: number, x2: number, y2: number) => {
-    return Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
   };
 
   /**
@@ -252,10 +251,11 @@ export function ValentinePrompt({ onYes, hideNoButton }: ValentinePromptProps) {
     vel.vx *= PHYSICS.FRICTION;
     vel.vy *= PHYSICS.FRICTION;
 
-    // Update refs and state
+    // Update refs and DOM directly (avoid React re-render lag during animation)
     positionRef.current = { x: newX, y: newY };
     velocityRef.current = vel;
-    setNoButtonPosition({ x: newX, y: newY });
+    noBtn.style.left = `${newX}px`;
+    noBtn.style.top = `${newY}px`;
 
     // Continue animating or stop
     const speed = Math.sqrt(vel.vx ** 2 + vel.vy ** 2);
@@ -265,6 +265,8 @@ export function ValentinePrompt({ onYes, hideNoButton }: ValentinePromptProps) {
       vel.vx = 0;
       vel.vy = 0;
       animFrameRef.current = null;
+      // Sync final position to React state
+      setNoButtonPosition({ x: newX, y: newY });
     }
   }, [resolveYesButtonCollision]);
 
@@ -283,10 +285,10 @@ export function ValentinePrompt({ onYes, hideNoButton }: ValentinePromptProps) {
       // Direction away from pointer
       let angle = Math.atan2(buttonCenterY - pointerY, buttonCenterX - pointerX);
 
-      // Add some randomness to the angle (up to +-45 degrees)
-      angle += (Math.random() - 0.5) * (Math.PI / 2);
+      // Add slight randomness to the angle (up to +-10 degrees)
+      angle += (Math.random() - 0.5) * (Math.PI / 9);
 
-      const speed = PHYSICS.LAUNCH_SPEED + Math.random() * 8;
+      const speed = PHYSICS.LAUNCH_SPEED + Math.random() * 4;
       velocityRef.current = {
         vx: Math.cos(angle) * speed,
         vy: Math.sin(angle) * speed,
@@ -304,86 +306,57 @@ export function ValentinePrompt({ onYes, hideNoButton }: ValentinePromptProps) {
     if (!noButtonRef.current || !buttonContainerRef.current) return;
 
     const buttonRect = noButtonRef.current.getBoundingClientRect();
-    const buttonCenterX = buttonRect.left + buttonRect.width / 2;
-    const buttonCenterY = buttonRect.top + buttonRect.height / 2;
 
-    const distance = calculateDistance(pointerX, pointerY, buttonCenterX, buttonCenterY);
+    // Signed distance from pointer to button edge
+    // Positive = outside the button, negative = inside the button
+    const dx = Math.max(buttonRect.left - pointerX, pointerX - buttonRect.right);
+    const dy = Math.max(buttonRect.top - pointerY, pointerY - buttonRect.bottom);
+    const edgeDistance = (dx > 0 || dy > 0)
+      ? Math.sqrt(Math.max(0, dx) ** 2 + Math.max(0, dy) ** 2)  // outside: Euclidean
+      : Math.max(dx, dy);  // inside: largest (least negative) = closest edge
 
-    if (distance < PHYSICS.DODGE_THRESHOLD) {
+    if (edgeDistance < PHYSICS.DODGE_THRESHOLD) {
       if (!isChasing) {
         setIsChasing(true);
         countRef.current += 1;
         setNoClickCount(countRef.current);
-        startSizeAnimation();
-        startPoliceFlicker();
       }
 
-      launchNoButton(pointerX, pointerY);
-    } else if (distance > PHYSICS.DODGE_THRESHOLD * PHYSICS.CHASE_STOP_MULTIPLIER) {
+      // Only re-launch if button has slowed down enough (prevents trembling)
+      const currentSpeed = Math.sqrt(
+        velocityRef.current.vx ** 2 + velocityRef.current.vy ** 2,
+      );
+      if (currentSpeed < PHYSICS.LAUNCH_SPEED * 0.3) {
+        launchNoButton(pointerX, pointerY);
+      }
+    } else if (edgeDistance > PHYSICS.DODGE_THRESHOLD * PHYSICS.CHASE_STOP_MULTIPLIER) {
       // Stop chase mode when far away
       if (isChasing) {
         setIsChasing(false);
-        stopSizeAnimation();
-        stopPoliceFlicker();
-        setButtonScale(1);
       }
     }
   };
 
-  const startSizeAnimation = () => {
-    if (scaleIntervalRef.current) return;
-    
-    let scaleIndex = 0;
-    const scales = [1.2, 0.8, 1.4, 0.7, 1.3, 0.9, 1.5]; // Random size changes
-    
-    scaleIntervalRef.current = window.setInterval(() => {
-      setButtonScale(scales[scaleIndex % scales.length]!);
-      scaleIndex++;
-    }, 300);
-  };
+  // Position the No button below the Yes button on mount
+  useEffect(() => {
+    const yes = yesButtonRef.current;
+    const container = buttonContainerRef.current;
+    const no = noButtonRef.current;
+    if (!yes || !container || !no) return;
 
-  const stopSizeAnimation = () => {
-    if (scaleIntervalRef.current) {
-      clearInterval(scaleIntervalRef.current);
-      scaleIntervalRef.current = null;
-    }
-  };
+    const containerRect = container.getBoundingClientRect();
+    const yesRect = yes.getBoundingClientRect();
+    const noW = no.offsetWidth;
 
-  const startPoliceFlicker = () => {
-    if (flickerIntervalRef.current) return;
-    
-    flickerIntervalRef.current = window.setInterval(() => {
-      setPoliceFlicker((prev) => !prev);
-    }, 200);
-  };
+    const x = (yesRect.left - containerRect.left) + (yesRect.width / 2) - (noW / 2);
+    const y = (yesRect.bottom - containerRect.top) + 16;
 
-  const stopPoliceFlicker = () => {
-    if (flickerIntervalRef.current) {
-      clearInterval(flickerIntervalRef.current);
-      flickerIntervalRef.current = null;
-      setPoliceFlicker(false);
-    }
-  };
+    setNoButtonPosition({ x, y });
+    positionRef.current = { x, y };
+  }, []);
 
   useEffect(() => {
-    const cleanupSizeAnimation = () => {
-      if (scaleIntervalRef.current) {
-        clearInterval(scaleIntervalRef.current);
-        scaleIntervalRef.current = null;
-      }
-    };
-
-    const cleanupPoliceFlicker = () => {
-      if (flickerIntervalRef.current) {
-        clearInterval(flickerIntervalRef.current);
-        flickerIntervalRef.current = null;
-        setPoliceFlicker(false);
-      }
-    };
-
     return () => {
-      cleanupSizeAnimation();
-      cleanupPoliceFlicker();
       if (messageTimerRef.current) {
         clearTimeout(messageTimerRef.current);
       }
@@ -412,7 +385,7 @@ export function ValentinePrompt({ onYes, hideNoButton }: ValentinePromptProps) {
 
       // Random direction
       const angle = Math.random() * Math.PI * 2;
-      const speed = PHYSICS.LAUNCH_SPEED + Math.random() * 10;
+      const speed = PHYSICS.LAUNCH_SPEED + Math.random() * 4;
       velocityRef.current = {
         vx: Math.cos(angle) * speed,
         vy: Math.sin(angle) * speed,
@@ -427,8 +400,8 @@ export function ValentinePrompt({ onYes, hideNoButton }: ValentinePromptProps) {
           buttonCenterY - containerCenterY,
           buttonCenterX - containerCenterX,
         );
-        velocityRef.current.vx += Math.cos(awayAngle) * 5;
-        velocityRef.current.vy += Math.sin(awayAngle) * 5;
+        velocityRef.current.vx += Math.cos(awayAngle) * 2;
+        velocityRef.current.vy += Math.sin(awayAngle) * 2;
       }
 
       if (animFrameRef.current === null) {
@@ -495,7 +468,7 @@ export function ValentinePrompt({ onYes, hideNoButton }: ValentinePromptProps) {
 
             <div
               ref={buttonContainerRef}
-              className="relative h-48 w-full"
+              className="relative h-72 -mx-6 sm:-mx-10 -mt-8 sm:-mt-12 -mb-10 sm:-mb-14"
               onMouseMove={handleMouseMove}
               onTouchStart={handleTouchStart}
               onTouchMove={(e: React.TouchEvent) => {
@@ -529,15 +502,9 @@ export function ValentinePrompt({ onYes, hideNoButton }: ValentinePromptProps) {
                   position: 'absolute',
                   left: `${noButtonPosition.x}px`,
                   top: `${noButtonPosition.y}px`,
-                  transition: isYesClicked ? 'transform 0.5s ease-in, opacity 0.4s ease-in' : 'none',
-                  transform: `scale(${buttonScale}) rotate(${isYesClicked ? '180deg' : '0deg'})`,
                   opacity: noButtonOpacity,
-                  backgroundColor: policeFlicker ? '#ef4444' : '#3b82f6',
-                  boxShadow: policeFlicker
-                    ? '0 0 20px rgba(239, 68, 68, 0.8), 0 0 40px rgba(239, 68, 68, 0.6)'
-                    : '0 0 20px rgba(59, 130, 246, 0.8), 0 0 40px rgba(59, 130, 246, 0.6)',
                 }}
-                className="px-4 py-2 text-white text-sm font-normal rounded border-2 border-gray-400 hover:border-gray-500 cursor-pointer"
+                className="px-8 py-2.5 text-white text-sm font-semibold rounded-full cursor-pointer border-0 animate-[no-button-chase_2s_ease-in-out_infinite]"
               >
                 {config.valentine.noButton}
               </button>
@@ -552,8 +519,8 @@ export function ValentinePrompt({ onYes, hideNoButton }: ValentinePromptProps) {
               </div>
             )}
 
-            <p className="mt-12 sm:mt-16 text-sm text-rose-700 dark:text-rose-300 italic bg-white/20 dark:bg-white/[0.06] backdrop-blur-sm rounded-full px-6 py-2 inline-block border border-white/40 dark:border-white/[0.08]">
-              {config.valentine.hintText} 😏
+            <p className="mt-12 sm:mt-16 text-xs text-rose-700 dark:text-rose-300 font-medium bg-white/20 dark:bg-white/[0.06] backdrop-blur-sm rounded-full px-6 py-2 inline-block border border-white/40 dark:border-white/[0.08]">
+              {config.valentine.hintText} <span className="not-italic">😏</span>
             </p>
           </div>
         </div>

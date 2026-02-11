@@ -1,27 +1,33 @@
 import React from 'react';
 import { config } from '../../config/config';
+import { questions } from '../../config/content';
 
 interface IntroScreenProps {
   onStart: () => void;
 }
 
 export const IntroScreen: React.FC<IntroScreenProps> = ({ onStart }) => {
+  // Preload quiz videos via <link> tags (doesn't consume iOS media element slots)
+  const videoLinks = questions
+    .filter(q => q.videoSrc)
+    .map(q => (
+      <link
+        key={q.id}
+        rel="preload"
+        as="video"
+        href={import.meta.env.BASE_URL + q.videoSrc}
+      />
+    ));
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-rose-100 via-pink-50 to-rose-200 dark:from-slate-950 dark:via-gray-900 dark:to-slate-950 px-4 sm:px-6 lg:px-8 py-8 sm:py-12 relative overflow-hidden transition-colors duration-500">
+      {videoLinks}
       {/* Floating background decorations */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-[10%] left-[5%] text-rose-300 opacity-20 dark:opacity-10 text-6xl animate-[float-1_8s_ease-in-out_infinite]">💕</div>
         <div className="absolute top-[20%] right-[10%] text-pink-300 opacity-20 dark:opacity-10 text-5xl animate-[float-2_10s_ease-in-out_infinite]" style={{ animationDelay: '1s' }}>✨</div>
         <div className="absolute bottom-[15%] left-[15%] text-rose-300 opacity-20 dark:opacity-10 text-5xl animate-[float-3_9s_ease-in-out_infinite]" style={{ animationDelay: '2s' }}>💖</div>
         <div className="absolute bottom-[25%] right-[8%] text-pink-300 opacity-20 dark:opacity-10 text-6xl animate-[float-1_11s_ease-in-out_infinite]" style={{ animationDelay: '1.5s' }}>💝</div>
-      </div>
-
-      {/* Hidden video preload for slow connections */}
-      <div style={{ position: 'absolute', width: 0, height: 0, overflow: 'hidden', pointerEvents: 'none' }}>
-        <video preload="auto" src={import.meta.env.BASE_URL + 'videos/1-cat-piano.webm'} />
-        <video preload="auto" src={import.meta.env.BASE_URL + 'videos/2-cat-funny-clip.webm'} />
-        <video preload="auto" src={import.meta.env.BASE_URL + 'videos/3-cat-japanese.webm'} />
-        <video preload="auto" src={import.meta.env.BASE_URL + 'videos/4-tyn-tyn.webm'} />
       </div>
 
       <div className="max-w-2xl w-full relative z-10">
