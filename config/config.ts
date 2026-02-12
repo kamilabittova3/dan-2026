@@ -21,25 +21,25 @@
 export const config = {
   // ─── Names ──────────────────────────────────────────────────────────
   /** The recipient's name (the person taking the quiz) */
-  recipientName: 'Tanya',
+  recipientName: 'Dan',
 
   /** The sender's name (the person who created the quiz) */
-  senderName: 'Vitas',
+  senderName: 'Kamila',
 
   // ─── Page title ─────────────────────────────────────────────────────
   /** Shown in the browser tab */
-  pageTitle: "Valentine's Day Quiz",
+  pageTitle: "It's Valentine!",
 
   // ─── Intro screen ──────────────────────────────────────────────────
   intro: {
     /** Greeting line above the recipient's name */
     greeting: "Happy Valentine's Day",
     /** Main message paragraph */
-    message: "I created this little moment for us. A small quiz to celebrate our story.",
+    message: "I prepared this little moment for us. A small surprise quiz to celebrate our story.",
     /** Instruction text below the message */
     instruction: "Answer these 7 questions for me :3",
     /** Text on the start button (emoji is appended automatically) */
-    startButton: "Let's Begin",
+    startButton: "Let's Go!",
     /** Small note below the button */
     timeEstimate: "Takes about 2 minutes",
   },
@@ -80,6 +80,7 @@ export const config = {
     hintText: '(Try clicking "No" if you dare...)',
     /** Witty messages shown when the No button is clicked */
     noClickMessages: [
+      'Too Hot To Handle!',
       'Nice try! But the answer is Yes!',
       'Oops! Wrong button!',
       'Are you sure? Think again!',
