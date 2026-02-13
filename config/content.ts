@@ -4,25 +4,29 @@ export const questions: Question[] = [
   {
     id: 'q1',
     type: 'multipleChoice',
-    question: 'What caught your attention about us so far?',
+    question: 'What charmed you the most about me?',
     designVariant: 'gradient-rose',
     videoSrc: 'videos/1-a-ha-take-on-me.mp4',
     options: [
       {
-        text: 'The way our conversations just flow',
-        letterSegment: 'Talking with you feels so natural \u2014 like we\'ve known each other forever.',
+        text: 'I don\'t know',
+        letterSegment: 'SAY IT TO MY FACE!',
       },
       {
-        text: 'Your smile when you laugh',
-        letterSegment: 'Your smile is honestly the highlight of my day.',
+        text: 'Your stunning personality and sense of humour',
+        letterSegment: 'The whole package.',
       },
       {
-        text: 'How comfortable it feels already',
-        letterSegment: 'Being around you already feels so easy and right.',
+        text: 'Your long legs that do not end...oh here they end!',
+        letterSegment: 'And they walk so fast!',
       },
       {
-        text: 'The little surprises along the way',
-        letterSegment: 'Every time we hang out, you surprise me in the best way.',
+        text: 'Your proper Simpsons knowledge',
+        letterSegment: 'Trying is the first step towards failure :)',
+      },
+      {
+        text: 'The sole fact that you have a dog, even without actually meeting Stella at that point',
+        letterSegment: 'Comes with Fido and Lalau <3',
       },
     ],
   },
@@ -31,10 +35,11 @@ export const questions: Question[] = [
     type: 'heartRating',
     question: 'How much do you enjoy our time together?',
     designVariant: 'hearts-pattern',
+    videoSrc: 'videos/hey_stella.mp4',
     maxHearts: 5,
     options: [
-      { hearts: 1, letterSegment: 'You\'re pretty good company, I\'ll admit.' },
-      { hearts: 2, letterSegment: 'I genuinely look forward to seeing you.' },
+      { hearts: 1, letterSegment: 'I don\'t know.' },
+      { hearts: 2, letterSegment: 'STELLAAAAAAA!!!!!' },
       { hearts: 3, letterSegment: 'You\'ve quickly become my favorite person to spend time with.' },
       { hearts: 4, letterSegment: 'I catch myself smiling just thinking about our plans.' },
       { hearts: 5, letterSegment: 'Honestly? I can\'t stop thinking about when we\'ll hang out next.' },
