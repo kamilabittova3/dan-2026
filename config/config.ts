@@ -39,7 +39,7 @@ export const config = {
     /** Instruction text below the message */
     instruction: "Answer these 7 questions for me :3",
     /** Text on the start button (emoji is appended automatically) */
-    startButton: "Fix You Posture & Let's Go!",
+    startButton: "FIX YOUR POSTURE & Let's Go!",
     /** Small note below the button */
     timeEstimate: "Takes about 2 minutes",
   },
