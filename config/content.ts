@@ -95,32 +95,36 @@ export const questions: Question[] = [
   {
     id: 'q5',
     type: 'multipleChoice',
-    question: 'What do you like most about how we vibe?',
+    question: 'What would my ideal date night look like?',
     designVariant: 'love-bubbles',
-    videoSrc: 'videos/3-Earth-Wind-Fire-September.mp4',
+    videoSrc: 'videos/Frozen2.mp4',
     options: [
       {
-        text: 'We never run out of things to talk about',
-        letterSegment: 'Our conversations could go on forever, and I\'d never get bored.',
+        text: 'We would watch Frozen 2 together',
+        letterSegment: 'Into the unknooooooown!',
       },
       {
-        text: 'We have the same sense of humor',
-        letterSegment: 'The fact that we crack each other up is honestly the best.',
+        text: 'Enjoy a hot candle massage',
+        letterSegment: 'Too Hot to Handle :)',
       },
       {
-        text: 'We\'re both genuinely curious about each other',
-        letterSegment: 'I love how we\'re both actually interested in each other\'s worlds.',
+        text: 'I don\'t know',
+        letterSegment: 'I said I don\'t know!',
       },
       {
-        text: 'It just feels easy and natural',
-        letterSegment: 'Everything with you feels effortless, and that\'s pretty rare.',
+        text: 'Washing hands properly together, followed by brushing the teeth, and wiping Stella\'s outside paws',
+        letterSegment: 'Because clean hands and breath is sexy.',
+      },
+      {
+        text: 'Visit to a closed restaurant, followed by dip in a cold jacuzzi and walk afterwards in a hurricane',
+        letterSegment: 'It doesn\'t need to be good, it needs to be memorable!',
       },
     ],
   },
   {
     id: 'q6',
     type: 'heartRating',
-    question: 'How excited are you for our next date?',
+    question: 'How excited are you for our next definitely memorable date?',
     designVariant: 'soft-crimson',
     maxHearts: 5,
     options: [
