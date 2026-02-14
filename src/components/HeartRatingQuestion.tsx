@@ -4,7 +4,7 @@ import { triggerFloatingHearts } from '../utils/selectionBurst';
 
 const HEART_LABELS: Record<number, string> = {
   1: 'A gentle warmth',
-  2: 'Growing stronger',
+  2: 'STELLAAAAAA!!!!!',
   3: 'Truly special',
   4: "Can't stop thinking of you",
   5: 'Absolutely overflowing!',
