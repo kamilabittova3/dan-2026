@@ -27,7 +27,7 @@ describe('App', () => {
     const user = userEvent.setup();
     render(<App />);
 
-    const startButton = screen.getByRole('button', { name: /let's begin/i });
+    const startButton = screen.getByRole('button', { name: /FIX YOUR POSTURE & Let's Go!/i });
     await user.click(startButton);
 
     expect(screen.getByText(/Q1\/\d+/)).toBeInTheDocument();
@@ -37,7 +37,7 @@ describe('App', () => {
     const user = userEvent.setup();
     render(<App />);
 
-    const startButton = screen.getByRole('button', { name: /let's begin/i });
+    const startButton = screen.getByRole('button', { name: /FIX YOUR POSTURE & Let's Go!/i });
     await user.click(startButton);
 
     const answerButtons = screen.getAllByRole('button').filter(btn => {
@@ -57,7 +57,7 @@ describe('App', () => {
     const user = userEvent.setup();
     render(<App />);
 
-    const startButton = screen.getByRole('button', { name: /let's begin/i });
+    const startButton = screen.getByRole('button', { name: /FIX YOUR POSTURE & Let's Go!/i });
     await user.click(startButton);
 
     expect(screen.getByText(/Q1\/\d+/)).toBeInTheDocument();
