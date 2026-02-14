@@ -83,7 +83,7 @@ export const EmojiReactionQuestion: React.FC<EmojiReactionQuestionProps> = ({
 
       {selectedAnswer && (
         <p className="text-center text-sm sm:text-base text-gray-600 dark:text-gray-400 animate-fade-in">
-          Perfect choice — your emotions shine through
+          Good.
         </p>
       )}
     </div>
