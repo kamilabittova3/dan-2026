@@ -35,11 +35,6 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
     ? stripBackdropBlur(rawCardBg) + ' bg-white/85 dark:bg-gray-900/85'
     : rawCardBg;
 
-  const isImage = (src: string) =>
-  /\.(png|jpe?g|gif|webp|avif|svg)$/i.test(src);
-
-const mediaUrl = (src: string) => `${import.meta.env.BASE_URL}${src}`;
-
   return (
     <div className={`min-h-screen flex items-center justify-center ${variant?.background ?? 'bg-gradient-to-br from-rose-100 via-pink-50 to-rose-200 dark:from-slate-950 dark:via-gray-900 dark:to-slate-950'} px-4 sm:px-6 lg:px-8 py-8 sm:py-12 relative overflow-hidden transition-colors duration-500`}>
       {/* Floating background decorations */}
@@ -57,26 +52,22 @@ const mediaUrl = (src: string) => `${import.meta.env.BASE_URL}${src}`;
           <div className="absolute inset-0 bg-gradient-to-br from-white/30 dark:from-white/[0.08] via-transparent to-transparent pointer-events-none" />
 
           <div className="space-y-6 sm:space-y-8 lg:space-y-10 relative w-full">
- 
-
             {videoSrc && (
-  isImage(videoSrc) ? (
-    <img
-      src={mediaUrl(videoSrc)}
-      alt=""
-      className="w-full rounded-xl object-cover"
-    />
-  ) : (
-    <video
-      className="w-full rounded-xl"
-      src={mediaUrl(videoSrc)}
-      autoPlay
-      muted
-      loop
-      playsInline
-    />
-  )
-)}
+              <div className="flex justify-center motion-reduce:hidden">
+                <video
+                  key={videoSrc}
+                  ref={registerVideo}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  controls
+                  preload="auto"
+                  src={import.meta.env.BASE_URL + videoSrc}
+                  className="rounded-2xl max-h-48 sm:max-h-56 lg:max-h-64 w-auto object-contain"
+                />
+              </div>
+            )}
             <h2 className={`text-2xl sm:text-3xl lg:text-4xl font-bold ${variant?.textColor ?? 'text-rose-900 dark:text-rose-100'} text-center leading-tight`}>
               {questionText}
             </h2>
