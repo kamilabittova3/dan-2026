@@ -87,6 +87,7 @@ export const questions: Question[] = [
     type: 'emojiReaction',
     question: 'How do you feel about getting to know me more?',
     designVariant: 'pastel-dream',
+    videoSrc: 'videos/Opalite Taylora.mp4',
     options: [
       {
         emoji: '\uD83E\uDD70',
