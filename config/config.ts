@@ -28,7 +28,7 @@ export const config = {
 
   // ─── Page title ─────────────────────────────────────────────────────
   /** Shown in the browser tab */
-  pageTitle: "It's Valentine! :)",
+  pageTitle: "It's Valentine!",
 
   // ─── Intro screen ──────────────────────────────────────────────────
   intro: {
