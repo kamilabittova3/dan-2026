@@ -87,7 +87,7 @@ export const questions: Question[] = [
     type: 'emojiReaction',
     question: 'How do you feel about getting to know me more?',
     designVariant: 'pastel-dream',
-    videoSrc: 'us_norway.jpg',
+    imageSrc: 'us_norway.jpg',
     options: [
       {
         emoji: '\uD83E\uDD70',
