@@ -7,7 +7,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest",
-    "deploy": "bun run build && cd dist && git init && git add -A && git commit -m deploy && git push -f git@github.com:ArtemisKS/valentine-2026.git master:gh-pages"
+    "deploy": "bun run build && cd dist && git init && git add -A && git commit -m deploy && git push -f git@github.com:kamilabittova3/dan-2026.git master:gh-pages"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
