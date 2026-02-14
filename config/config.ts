@@ -24,7 +24,7 @@ export const config = {
   recipientName: 'Dan',
 
   /** The sender's name (the person who created the quiz) */
-  senderName: 'Kamila',
+  senderName: 'Kamilla',
 
   // ─── Page title ─────────────────────────────────────────────────────
   /** Shown in the browser tab */
@@ -35,7 +35,7 @@ export const config = {
     /** Greeting line above the recipient's name */
     greeting: "Happy Valentine's Day",
     /** Main message paragraph */
-    message: "I prepared this little moment for us. A small surprise quiz to celebrate our story.",
+    message: "I prepared this little moment for us. Hope you prepared something as well.",
     /** Instruction text below the message */
     instruction: "Answer these 7 questions for me :3",
     /** Text on the start button (emoji is appended automatically) */
@@ -49,7 +49,7 @@ export const config = {
     /** Heading after the animated percentage */
     title: "Perfect Match!",
     /** Body text explaining the score */
-    message: "A Perfect Match. My heart knew it all along, but seeing your answers makes it sing.",
+    message: "A Perfect Match. My heart knew it all along, but seeing your answers makes it sing. I wish you knew my correct name as well.",
     /** Label on the continue button (emoji appended automatically) */
     continueButton: "See Your Letter",
   },
