@@ -82,10 +82,11 @@ export const config = {
     noClickMessages: [
       'What did you say? SAY IT TO MY FACE!!!!!',
       'Nice try! But the answer is Yes!',
-      'Oops! Wrong button!',
+      'What did you say? SAY IT TO MY FACE!!!!!',
       'Are you sure? Think again!',
+      'What did you say? SAY IT TO MY FACE!!!!!',
       "That button doesn't work here!",
-      'The only answer is Yes!',
+      'What did you say? SAY IT TO MY FACE!!!!!',
     ],
   },
 
