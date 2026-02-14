@@ -57,30 +57,26 @@ const mediaUrl = (src: string) => `${import.meta.env.BASE_URL}${src}`;
           <div className="absolute inset-0 bg-gradient-to-br from-white/30 dark:from-white/[0.08] via-transparent to-transparent pointer-events-none" />
 
           <div className="space-y-6 sm:space-y-8 lg:space-y-10 relative w-full">
+ 
+
             {videoSrc && (
-              <div className="flex justify-center motion-reduce:hidden">
-                isImage(videoSrc) ? (
+  isImage(videoSrc) ? (
     <img
       src={mediaUrl(videoSrc)}
       alt=""
       className="w-full rounded-xl object-cover"
     />
   ) : (
-                <video
-                  key={videoSrc}
-                  ref={registerVideo}
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  controls
-                  preload="auto"
-                  src={import.meta.env.BASE_URL + videoSrc}
-                  className="rounded-2xl max-h-48 sm:max-h-56 lg:max-h-64 w-auto object-contain"
-                />
-                )
-              </div>
-            )}
+    <video
+      className="w-full rounded-xl"
+      src={mediaUrl(videoSrc)}
+      autoPlay
+      muted
+      loop
+      playsInline
+    />
+  )
+)}
             <h2 className={`text-2xl sm:text-3xl lg:text-4xl font-bold ${variant?.textColor ?? 'text-rose-900 dark:text-rose-100'} text-center leading-tight`}>
               {questionText}
             </h2>
