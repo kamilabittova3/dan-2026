@@ -96,7 +96,7 @@ export const questions: Question[] = [
       {
         emoji: '\u2728',
         label: 'Can\'t wait for more... Stella...',
-        letterSegment: 'Every conversation leaves me wanting to know more about you and ask you if you washed your hands?',
+        letterSegment: 'There is also me, not just Stella.',
       },
       {
         emoji: '\uD83C\uDF08',
