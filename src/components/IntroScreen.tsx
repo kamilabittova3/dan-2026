@@ -11,18 +11,16 @@ export const IntroScreen: React.FC<IntroScreenProps> = ({ onStart }) => {
   useEffect(() => {
     const links: HTMLLinkElement[] = [];
 
-const isVideo = (src: string) => /\.(mp4|webm|ogg)$/i.test(src);
-
-questions.forEach((q) => {
-  if (q.videoSrc && isVideo(q.videoSrc)) {
-    const link = document.createElement("link");
-    link.rel = "preload";
-    link.as = "video";
-    link.href = import.meta.env.BASE_URL + q.videoSrc;
-    document.head.appendChild(link);
-    links.push(link);
-  }
-});
+    questions.forEach(q => {
+      if (q.videoSrc) {
+        const link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'video';
+        link.href = import.meta.env.BASE_URL + q.videoSrc;
+        document.head.appendChild(link);
+        links.push(link);
+      }
+    });
 
     return () => {
       links.forEach(link => document.head.removeChild(link));
