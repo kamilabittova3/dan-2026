@@ -14,11 +14,11 @@ export const questions: Question[] = [
       },
       {
         text: 'Your stunning personality and sense of humour',
-        letterSegment: 'The whole package.',
+        letterSegment: 'I\'m the whole package.',
       },
       {
         text: 'Your long legs that do not end...oh here they end!',
-        letterSegment: 'And they walk so fast!',
+        letterSegment: 'And my legs walk so fast!',
       },
       {
         text: 'Your proper Simpsons knowledge',
@@ -26,11 +26,11 @@ export const questions: Question[] = [
       },
       {
         text: 'The sole fact that you have a dog, even without actually meeting Stella at that point',
-        letterSegment: 'Comes with Fido and Lalau <3',
+        letterSegment: 'I also come with Fido and Lalau <3',
       },
       {
         text: '3 things',
-        letterSegment: 'I wish they were done properly',
+        letterSegment: 'You wish those 3 things were done properly...? :)',
       },
     ],
   },
@@ -58,27 +58,27 @@ export const questions: Question[] = [
     options: [
       {
         text: 'Eat poutine at La Belle Province and share PTSD',
-        letterSegment: 'Or pizzaghetti. Let\'s murder that Italian cuisine and share another PTSD.',
+        letterSegment: 'Poutine or pizzaghetti. Let\'s murder that Italian cuisine and share another PTSD.',
       },
       {
         text: 'Go to Cirque du Soleil',
-        letterSegment: 'Their costumes feel like they are wearing nothing at all!',
+        letterSegment: 'Costumes at Cirque du Soleil feel like they are wearing nothing at all!',
       },
       {
         text: 'Go hiking!',
-        letterSegment: 'Finally the real deal!',
+        letterSegment: 'Finally the real deal, hiking!',
       },
       {
         text: 'Try the lovely contradance',
-        letterSegment: 'Or salsa and bachata. They look too hot to handle!',
+        letterSegment: 'Contradance, salsa or bachata. They all look too hot to handle!',
       },
       {
         text: 'Anything that includes Stella!',
-        letterSegment: 'Your presence is not required...',
+        letterSegment: 'Stella is the important one. My presence is not required...',
       },
       {
         text: 'Go to amusement park La Ronde',
-        letterSegment: 'They have bumpy cars!',
+        letterSegment: 'They have bumpy cars at La Ronde!',
       },
     ],
   },
@@ -124,11 +124,11 @@ export const questions: Question[] = [
       },
       {
         text: 'Enjoy a hot candle massage',
-        letterSegment: 'Too Hot to Handle :)',
+        letterSegment: 'Too Hot to Handle Candle Massage :)',
       },
       {
         text: 'I don\'t know',
-        letterSegment: 'I said I don\'t know!',
+        letterSegment: 'You said you don\'t know!',
       },
       {
         text: 'Washing hands properly together, followed by brushing the teeth, and wiping Stella\'s outside paws',
