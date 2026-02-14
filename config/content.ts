@@ -87,6 +87,7 @@ export const questions: Question[] = [
     type: 'emojiReaction',
     question: 'How do you feel about getting to know me more?',
     designVariant: 'pastel-dream',
+    videoSrc: 'videos/us_norway.jpg',
     options: [
       {
         emoji: '\uD83E\uDD70',
@@ -95,8 +96,8 @@ export const questions: Question[] = [
       },
       {
         emoji: '\u2728',
-        label: 'Can\'t wait for more',
-        letterSegment: 'Every conversation leaves me wanting to know more about you.',
+        label: 'Can\'t wait for more... Stella...',
+        letterSegment: 'Every conversation leaves me wanting to know more about you and Stella.',
       },
       {
         emoji: '\uD83C\uDF08',
@@ -106,7 +107,7 @@ export const questions: Question[] = [
       {
         emoji: '\uD83D\uDCAB',
         label: 'Pleasantly surprised',
-        letterSegment: 'You\'ve surprised me in the best way, and I\'m here for it.',
+        letterSegment: 'You\'ve surprised me in the best way, and I\'m here for it and for Stella.',
       },
     ],
   },
@@ -147,10 +148,10 @@ export const questions: Question[] = [
     maxHearts: 5,
     options: [
       { hearts: 1, letterSegment: 'I\'m looking forward to it, for sure.' },
-      { hearts: 2, letterSegment: 'Already thinking about what we could do.' },
-      { hearts: 3, letterSegment: 'Counting down the days, not gonna lie.' },
-      { hearts: 4, letterSegment: 'I may have already started planning outfit options.' },
-      { hearts: 5, letterSegment: 'Let\'s just say my calendar is cleared and ready.' },
+      { hearts: 2, letterSegment: 'Already thinking about what we could do. With Stella.' },
+      { hearts: 3, letterSegment: 'Counting down the days, not gonna lie. And Stella.' },
+      { hearts: 4, letterSegment: 'I may have already started planning outfit options to impress Stella.' },
+      { hearts: 5, letterSegment: 'Let\'s just say my calendar is cleared and ready. Just book the flight!' },
     ],
   },
   {
