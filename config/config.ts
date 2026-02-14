@@ -81,7 +81,7 @@ export const config = {
     /** Witty messages shown when the No button is clicked */
     noClickMessages: [
       'What did you say? SAY IT TO MY FACE!!!!!',
-      'Nice try! But the answer is Yes!',
+      'What did you say? SAY IT TO MY FACE!!!!!',
       'What did you say? SAY IT TO MY FACE!!!!!',
       'Are you sure? Think again!',
       'What did you say? SAY IT TO MY FACE!!!!!',
