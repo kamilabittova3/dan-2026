@@ -6,7 +6,7 @@ export const questions: Question[] = [
     type: 'multipleChoice',
     question: 'What charmed you the most about me?',
     designVariant: 'gradient-rose',
-    videoSrc: 'videos/1-a-ha-take-on-me.mp4',
+    videoSrc: 'videos/Opalite Taylora.mp4',
     options: [
       {
         text: 'I don\'t know',
@@ -28,6 +28,10 @@ export const questions: Question[] = [
         text: 'The sole fact that you have a dog, even without actually meeting Stella at that point',
         letterSegment: 'Comes with Fido and Lalau <3',
       },
+      {
+        text: '3 things',
+        letterSegment: 'I wish they were done properly',
+      },
     ],
   },
   {
@@ -45,22 +49,36 @@ export const questions: Question[] = [
       { hearts: 5, letterSegment: 'Honestly? I can\'t stop thinking about when we\'ll hang out next.' },
     ],
   },
-  {
+ {
     id: 'q3',
-    type: 'yesNo',
-    question: 'Do you think we\'ve got something special starting here?',
-    designVariant: 'romantic-purple',
-    videoSrc: 'videos/2-George-Michael-Careless-Whisper.mp4',
+    type: 'multipleChoice',
+    question: 'What are you the most excited to do together in Canada?',
+    designVariant: 'gradient-rose',
+    videoSrc: 'videos/la_ronde.mp4',
     options: [
       {
-        value: 'yes',
-        text: 'Definitely, I like where this is going',
-        letterSegment: 'I feel like we\'ve got something really good starting, and I can\'t wait to see where it goes.',
+        text: 'Eat poutine at La Belle Province and share PTSD',
+        letterSegment: 'Or pizzaghetti. Let\'s murder that Italian cuisine and share another PTSD.',
       },
       {
-        value: 'no',
-        text: 'It\'s even better than I expected',
-        letterSegment: 'What\'s happening between us is already better than anything I could have imagined.',
+        text: 'Go to Cirque du Soleil',
+        letterSegment: 'Their costumes feel like they are wearing nothing at all!',
+      },
+      {
+        text: 'Go hiking!',
+        letterSegment: 'Finally the real deal!',
+      },
+      {
+        text: 'Try the lovely contradance',
+        letterSegment: 'Or salsa and bachata. They look too hot to handle!',
+      },
+      {
+        text: 'Anything that includes Stella!',
+        letterSegment: 'Your presence is not required...',
+      },
+      {
+        text: 'Go to amusement park La Ronde',
+        letterSegment: 'They have bumpy cars!',
       },
     ],
   },
