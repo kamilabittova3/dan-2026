@@ -3,6 +3,7 @@ export interface BaseQuestion {
   question: string;
   designVariant: string;
   videoSrc?: string;
+  imageSrc?: string;
 }
 
 export interface MultipleChoiceOption {
