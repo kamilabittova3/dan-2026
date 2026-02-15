@@ -42,7 +42,7 @@ export const config = {
     startButton: "FIX YOUR POSTURE & Let's Go!",
     /** Small note below the button */
     timeEstimate: "Takes about 2 minutes",
-  //},
+  },
 
   // ─── Score reveal screen ───────────────────────────────────────────
   scoreReveal: {
