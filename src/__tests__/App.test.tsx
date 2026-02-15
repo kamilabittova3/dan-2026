@@ -10,11 +10,11 @@ describe('App', () => {
 
   it('renders intro screen on initial load', () => {
     render(<App />);
-   // expect(screen.getByText(/happy valentine/i)).toBeInTheDocument();
-  });
+    expect(screen.getByText(/happy valentine/i)).toBeInTheDocument();
   });
 
-/***  it('displays progress indicator during quiz', async () => {
+
+  it('displays progress indicator during quiz', async () => {
     const user = userEvent.setup();
     render(<App />);
 
@@ -75,5 +75,5 @@ describe('App', () => {
       expect(screen.getByText(/Q2\/\d+/)).toBeInTheDocument();
     }
   });
-});***/
+});
 
