@@ -1,4 +1,4 @@
-/***import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
@@ -13,7 +13,7 @@ describe('App', () => {
     expect(screen.getByText(/happy valentine/i)).toBeInTheDocument();
   });
 
-  it('displays progress indicator during quiz', async () => {
+/***  it('displays progress indicator during quiz', async () => {
     const user = userEvent.setup();
     render(<App />);
 
@@ -74,5 +74,5 @@ describe('App', () => {
       expect(screen.getByText(/Q2\/\d+/)).toBeInTheDocument();
     }
   });
-});
-***/
+});***/
+
