@@ -12,6 +12,7 @@ describe('App', () => {
     render(<App />);
     expect(screen.getByText(/happy valentine/i)).toBeInTheDocument();
   });
+  });
 
 /***  it('displays progress indicator during quiz', async () => {
     const user = userEvent.setup();
