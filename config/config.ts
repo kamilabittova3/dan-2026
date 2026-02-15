@@ -30,27 +30,18 @@ export const config = {
   /** Shown in the browser tab */
   pageTitle: "It's Valentine!",
 
-  // ─── Intro screen ──────────────────────────────────────────────────
-  intro: {
-    /** Main message paragraph */
-    message: "\"I need your help with something and it\'s very time sensitive! Can you please look at it today?\"",
-    /** Instruction text below the message */
-    instruction: "...",
-
-  },
-
     // ─── Intro screen ──────────────────────────────────────────────────
- // intro: {
+  intro: {
     /** Greeting line above the recipient's name */
-   // greeting: "Happy Valentine's Day",
+    greeting: "Happy Valentine's Day",
     /** Main message paragraph */
-   // message: "I prepared this little moment for us. Hope you prepared something as well.",
+    message: "I prepared this little moment for us. Hope you prepared something as well.",
     /** Instruction text below the message */
-   // instruction: "Answer these 7 questions for me :3",
+    instruction: "Answer these 7 questions for me :3",
     /** Text on the start button (emoji is appended automatically) */
-   // startButton: "FIX YOUR POSTURE & Let's Go!",
+    startButton: "FIX YOUR POSTURE & Let's Go!",
     /** Small note below the button */
-   // timeEstimate: "Takes about 2 minutes",
+    timeEstimate: "Takes about 2 minutes",
   //},
 
   // ─── Score reveal screen ───────────────────────────────────────────
