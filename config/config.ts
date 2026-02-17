@@ -1,6 +1,7 @@
 /**
  * Valentine Quiz -- White-Label Configuration
  * =============================================
+ 
  *
  * Edit this file to customise every piece of user-facing text in the quiz.
  * No other source files need to be changed.
